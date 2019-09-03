@@ -35,15 +35,18 @@ struct Person: Codable {
         
         hairColor = try container.decode(String.self, forKey: .hairColor)
         
-        // 1st Approach
+        // 1st Approach: Walk through the Array of Strings and convert to URLs
+        // More control / error handling
 //        var filmsContainer = try container.nestedUnkeyedContainer(forKey: .films)
 //        var filmUrls: [URL] = []
 //        while filmsContainer.isAtEnd == false {
+////            try filmsContainer.decodeIfPresent(String.self)
 //            let filmString = try filmsContainer.decode(String.self)
 //            if let url = URL(string: filmString) {
 //                filmUrls.append(url)
 //            }
 //        }
+//        films = filmUrls
 
         // 2nd approach [String]
         
@@ -68,3 +71,10 @@ let decoder = JSONDecoder()
 let luke = try! decoder.decode(Person.self, from: data)
 
 print(luke)
+
+
+// Testing bad URLs
+//let url2 = URL(string: "https://abc")!
+//let data2 = try! Data(contentsOf: url2)
+
+// TODO: Test encoder save/load
