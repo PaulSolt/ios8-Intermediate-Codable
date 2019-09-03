@@ -35,16 +35,27 @@ struct Person: Codable {
         
         hairColor = try container.decode(String.self, forKey: .hairColor)
         
-        var filmsContainer = try container.nestedUnkeyedContainer(forKey: .films)
+        // 1st Approach
+//        var filmsContainer = try container.nestedUnkeyedContainer(forKey: .films)
+//        var filmUrls: [URL] = []
+//        while filmsContainer.isAtEnd == false {
+//            let filmString = try filmsContainer.decode(String.self)
+//            if let url = URL(string: filmString) {
+//                filmUrls.append(url)
+//            }
+//        }
+
+        // 2nd approach [String]
         
-        var filmUrls: [URL] = []
-        while filmsContainer.isAtEnd == false {
-            let filmString = try filmsContainer.decode(String.self)
-            if let url = URL(string: filmString) {
-                filmUrls.append(url)
-            }
-        }
-        films = filmUrls
+//        let filmStrings = try container.decode([String].self, forKey: .films)
+//        films = filmStrings.compactMap { URL(string: $0) }
+
+        // 3rd approach [URL]
+        // Can decode an array of URLs in 1 line (less error handling / flexibility)
+        films = try container.decode([URL].self, forKey: .films)
+        
+        
+        
     }
     
 }
